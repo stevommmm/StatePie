@@ -2,7 +2,7 @@
 <html>
 <html>
 <head>
-	<title>DataPie</title>
+	<title>StatePie</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<!--[if lte IE 8]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script><![endif]-->
@@ -10,7 +10,14 @@
 	<link rel="stylesheet" href="main.css" />
 </head>
 <body>
-	<div id="wrapper"></div>
+	<div id="wrapper">
+		<noscript>
+			<p style="text-align:center;">You seem to have javascript disabled. This site won't work without it sorry :(</p>
+		</noscript>
+		<div class="metric">
+			<a href="#" class="button">Sort by warning</a>
+		</div>
+	</div>
 	<script type="text/javascript">
 		function makeRequest(url, callback) {
 			var httpRequest;
@@ -45,16 +52,15 @@
 
 		function parseJSONCallback(content) {
 			jsonblob = JSON.parse(content);
-			console.log(jsonblob);
 			var wrapper = document.getElementById('wrapper');
-
+			// wrapper.innerHTML = '';
 			for (var i = 0; i < jsonblob.length; i++) { 
-			    new Pie(jsonblob[i].percent, jsonblob[i].description).renderTo(wrapper);
+			    new Pie(jsonblob[i].percent, jsonblob[i].description, i).renderTo(wrapper);
 			}
 		}
 
 		window.onload = function() {
-			makeRequest('/state.json', parseJSONCallback);
+			makeRequest('/state.json?t=' + Date.now(), parseJSONCallback);
 		}
 	</script>
 </body>
