@@ -1,0 +1,39 @@
+html {
+	height: 100%;
+	-webkit-font-smoothing: antialiased;
+}
+body {
+	font-family: 'Helvetica Neue', 'Roboto', sans-serif;
+	color: #f4f4f4;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 1.6em;
+	background-color: #4696E5;
+	margin: 0;
+	min-height: 100%;
+}
+#wrapper {
+	margin: 10px;
+}
+.metric {
+	width: 200px;
+	height: 200px;
+	border: 1px solid rgba(0,0,0,0.4);
+	margin: 10px;
+	display: inline-block;
+	border-radius: 4px;
+	box-shadow: 0 0 5px 0 rgba(0,0,0,0.2) inset;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+.metric > svg {
+	display: inline-block;
+	width: 200px;
+	height: 200px;
+	vertical-align: top;
+}
+.metric > p {
+	display: inline-block;
+	vertical-align: top;
+	width: 200px;
+}

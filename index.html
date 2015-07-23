@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<html>
+<head>
+	<title>DataPie</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!--[if lte IE 8]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script><![endif]-->
+	<script type="text/javascript" src="pie.js"></script>
+	<link rel="stylesheet" href="main.css" />
+</head>
+<body>
+	<div id="wrapper"></div>
+	<script type="text/javascript">
+		function makeRequest(url, callback) {
+			var httpRequest;
+			if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+				httpRequest = new XMLHttpRequest();
+			} else if (window.ActiveXObject) { // IE
+				try {
+					httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+				} catch (e) {
+					try {
+						httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+					} catch (e) {}
+				}
+			}
+
+			if (!httpRequest) {
+				alert('Giving up :( Cannot create an XMLHTTP instance');
+				return false;
+			}
+			httpRequest.onreadystatechange = function() { 
+				if (httpRequest.readyState === 4) {
+					if (httpRequest.status === 200) {
+						callback(httpRequest.responseText);
+					} else {
+						alert('There was a problem with the request.');
+					}
+				}
+			};
+			httpRequest.open('GET', url);
+			httpRequest.send();
+		}
+
+		function parseJSONCallback(content) {
+			jsonblob = JSON.parse(content);
+			console.log(jsonblob);
+			var wrapper = document.getElementById('wrapper');
+
+			for (var i = 0; i < jsonblob.length; i++) { 
+			    new Pie(jsonblob[i].percent, jsonblob[i].description).renderTo(wrapper);
+			}
+		}
+
+		window.onload = function() {
+			makeRequest('/state.json', parseJSONCallback);
+		}
+	</script>
+</body>
+</html>
