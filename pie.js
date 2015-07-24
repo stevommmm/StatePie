@@ -54,9 +54,10 @@
 	    // Percent text
 	    var text = document.createElementNS(svgns, "text");
 	    text.setAttributeNS(null, "text-anchor", "middle");
+	    text.setAttributeNS(null, "font-size", "24px");
 	    text.setAttributeNS(null, "fill", "#fff");
 	    text.setAttributeNS(null, "x", parseInt(svg.getAttribute('width')) / 2);
-		text.setAttributeNS(null, "y", parseInt(svg.getAttribute('height')) / 2);
+		text.setAttributeNS(null, "y", parseInt(svg.getAttribute('height')) / 2 + 6);
 	    var textNode = document.createTextNode(percent + "%");
 		text.appendChild(textNode);
 
@@ -78,13 +79,23 @@
     	this._description = description;
     }
 
-    Pie.prototype.renderTo = function(container) {
+    Pie.prototype.renderTo = function(container, expandAlert, expandWarn) {
+    	var expandAlert = expandAlert || false;  // Auto expand alert 
+    	var expandWarn = expandWarn || false;  // Auto expand warning
+
     	var metric = document.createElement('div');
+    	metric.setAttribute('data-percent', this._percent);
     	metric.className = "metric";
     	if (this._percent >= 95) {
     		metric.className += " alert";
+    		if (expandAlert) { 
+    			metric.style.width = "410px";
+    		}
     	} else if (this._percent >= 80) {
     		metric.className += " warn";
+    		if (expandWarn) { 
+    			metric.style.width = "410px";
+    		}
     	} else {
     		metric.className += " normal";
     	}

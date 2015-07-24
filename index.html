@@ -7,60 +7,29 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<!--[if lte IE 8]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script><![endif]-->
 	<script type="text/javascript" src="pie.js"></script>
+	<script type="text/javascript" src="main.js"></script>
 	<link rel="stylesheet" href="main.css" />
 </head>
 <body>
-	<div id="wrapper">
+	<div class="wrapper">
 		<noscript>
 			<p style="text-align:center;">You seem to have javascript disabled. This site won't work without it sorry :(</p>
 		</noscript>
-		<div class="metric">
-			<a href="#" class="button">Sort by warning</a>
-		</div>
+		<div class="metric" id="options"></div>
+		<span id="dynamic"></span>
 	</div>
 	<script type="text/javascript">
-		function makeRequest(url, callback) {
-			var httpRequest;
-			if (window.XMLHttpRequest) { // Mozilla, Safari, ...
-				httpRequest = new XMLHttpRequest();
-			} else if (window.ActiveXObject) { // IE
-				try {
-					httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
-				} catch (e) {
-					try {
-						httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-					} catch (e) {}
-				}
-			}
-
-			if (!httpRequest) {
-				alert('Giving up :( Cannot create an XMLHTTP instance');
-				return false;
-			}
-			httpRequest.onreadystatechange = function() { 
-				if (httpRequest.readyState === 4) {
-					if (httpRequest.status === 200) {
-						callback(httpRequest.responseText);
-					} else {
-						alert('There was a problem with the request.');
-					}
-				}
-			};
-			httpRequest.open('GET', url);
-			httpRequest.send();
-		}
-
-		function parseJSONCallback(content) {
-			jsonblob = JSON.parse(content);
-			var wrapper = document.getElementById('wrapper');
-			// wrapper.innerHTML = '';
-			for (var i = 0; i < jsonblob.length; i++) { 
-			    new Pie(jsonblob[i].percent, jsonblob[i].description, i).renderTo(wrapper);
-			}
-		}
-
 		window.onload = function() {
-			makeRequest('/state.json?t=' + Date.now(), parseJSONCallback);
+			var oele = document.getElementById('options');
+			oele.appendChild(generateOptionElement('sortPriority', 'Sort by Percent'));
+			oele.appendChild(generateOptionElement('expandWarn', 'Expand Warnings'));
+			oele.appendChild(generateOptionElement('expandAlert', 'Expand Alerts'));
+
+			setTimeout(function getMetrics() {
+			    makeRequest('/state.json?t=' + Date.now(), parseJSONCallback);
+			    setTimeout(getMetrics, 60000);
+			}, 0);
+
 		}
 	</script>
 </body>

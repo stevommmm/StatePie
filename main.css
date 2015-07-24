@@ -12,12 +12,12 @@ body {
 	min-height: 100%;
 	color: #fff;
 }
-#wrapper {
+.wrapper {
 	margin: 0 auto;
 	background-color: #fff;
 	padding: 5px;
 }
-#wrapper:after {
+.wrapper:after {
     content:'';
     display:block;
     clear: both;
@@ -57,43 +57,34 @@ body {
 	width: 200px;
 	font-size: 14px;
 }
-.metric .button {
-	display: inline-block;
-	text-decoration: none;
-	border: 2px solid #fff;
-	color: #fff;
-	font-weight: bold;
-	background-color: rgba(0,0,0,0.2);
-	border-radius: 4px;
-	margin: 20px;
-	padding: 3px 7px;
+#options {
+	padding: 10px;
 }
-.metric .button:active {
-	box-shadow: 0 0 9px 0 rgba(0,0,0,0.4);
-	outline: none;
+#options > p {
+	margin: 0;
 }
 
 @media (min-width: 420px) {
-	#wrapper { width: 420px; }
+	.wrapper { width: 420px; }
 }
 @media (min-width: 630px) {
-	#wrapper { width: 630px; }
+	.wrapper { width: 630px; }
 }
 @media (min-width: 840px) {
-	#wrapper { width: 840px; }
+	.wrapper { width: 840px; }
 }
 @media (min-width: 1050px) {
-	#wrapper { width: 1050px; }
+	.wrapper { width: 1050px; }
 }
 @media (min-width: 1260px) {
-	#wrapper { width: 1260px; }
+	.wrapper { width: 1260px; }
 }
 @media (min-width: 1470px) {
-	#wrapper { width: 1470px; }
+	.wrapper { width: 1470px; }
 }
 @media (min-width: 1680px) {
-	#wrapper { width: 1680px; }
+	.wrapper { width: 1680px; }
 }
 @media (min-width: 1890px) {
-	#wrapper { width: 1890px; }
+	.wrapper { width: 1890px; }
 }
