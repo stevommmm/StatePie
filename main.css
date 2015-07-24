@@ -50,6 +50,7 @@ body {
 	width: 200px;
 	height: 200px;
 	vertical-align: top;
+	cursor: pointer;
 }
 .metric > p {
 	display: inline-block;
@@ -62,6 +63,7 @@ body {
 }
 #options > p {
 	margin: 0;
+	width: 180px;
 }
 
 @media (min-width: 420px) {

@@ -1,18 +1,21 @@
-var OPTIONS = {'sortPriority': false, 'expandWarn': false, 'expandAlert': false };
+var OPTIONS = {
+	'sortPriority': false, 
+	'expandAlert': false,
+	'expandWarn': false,
+	'expandNormal': false,
+};
 
 function toggleOption(opt) {
 	if (opt in OPTIONS) {
 		OPTIONS[opt] = !OPTIONS[opt];
 	}
-	setWindowHash();
-}
-function setWindowHash() {
+	// Set window hashes
 	var _keys = Object.keys(OPTIONS).filter(function(key) {return OPTIONS[key] === true})
 	var keys = _keys.map(function(obj){ return "#" + obj; });
 
 	location.hash = keys.join("");
-
 }
+
 function generateOptionElement(opt, description) {
 	var p = document.createElement("p");
 	var checkbox = document.createElement('input');
@@ -70,7 +73,7 @@ function makeRequest(url, callback) {
 		alert('Giving up :( Cannot create an XMLHTTP instance');
 		return false;
 	}
-	httpRequest.onreadystatechange = function() { 
+	httpRequest.onreadystatechange = function() {
 		if (httpRequest.readyState === 4) {
 			if (httpRequest.status === 200) {
 				callback(httpRequest.responseText);
@@ -87,7 +90,6 @@ function parseJSONCallback(content) {
 	var jsonblob = JSON.parse(content);
 	var wrapper = document.getElementById('dynamic');
 	wrapper.innerHTML = '';
-	console.log(OPTIONS);
 
 	if (OPTIONS['sortPriority']) {
 		jsonblob.sort(sortPriority);
@@ -95,7 +97,7 @@ function parseJSONCallback(content) {
 
 	for (var i = 0; i < jsonblob.length; i++) { 
 		new Pie(jsonblob[i].percent, jsonblob[i].description, i)
-			.renderTo(wrapper,  OPTIONS['expandAlert'], OPTIONS['expandWarn']);
+			.renderTo(wrapper,  OPTIONS);
 	}
 }
 

@@ -22,8 +22,9 @@
 		window.onload = function() {
 			var oele = document.getElementById('options');
 			oele.appendChild(generateOptionElement('sortPriority', 'Sort by Percent'));
-			oele.appendChild(generateOptionElement('expandWarn', 'Expand Warnings'));
 			oele.appendChild(generateOptionElement('expandAlert', 'Expand Alerts'));
+			oele.appendChild(generateOptionElement('expandWarn', 'Expand Warnings'));
+			oele.appendChild(generateOptionElement('expandNormal', 'Expand Normal'));
 
 			setTimeout(function getMetrics() {
 			    makeRequest('/state.json?t=' + Date.now(), parseJSONCallback);

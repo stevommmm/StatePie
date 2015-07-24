@@ -79,9 +79,10 @@
     	this._description = description;
     }
 
-    Pie.prototype.renderTo = function(container, expandAlert, expandWarn) {
-    	var expandAlert = expandAlert || false;  // Auto expand alert 
-    	var expandWarn = expandWarn || false;  // Auto expand warning
+    Pie.prototype.renderTo = function(container, options) {
+    	var expandAlert = options['expandAlert'] || false;  // Auto expand alert 
+    	var expandWarn = options['expandWarn'] || false;  // Auto expand warning
+    	var expandNormal = options['expandNormal'] || false;  // Auto expand green
 
     	var metric = document.createElement('div');
     	metric.setAttribute('data-percent', this._percent);
@@ -98,6 +99,9 @@
     		}
     	} else {
     		metric.className += " normal";
+    		if (expandNormal) { 
+    			metric.style.width = "410px";
+    		}
     	}
 
 
@@ -115,7 +119,6 @@
 
 		container.appendChild(metric);
 		metric.onclick = function() {
-			console.log(parseInt(this.style.width));
 			this.style.width = parseInt(this.style.width) === 410 ? "200px" : "410px";
 		};
 	};
