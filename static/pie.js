@@ -87,6 +87,10 @@
     	var metric = document.createElement('div');
     	metric.setAttribute('data-percent', this._percent);
     	metric.className = "metric";
+    	metric.setAttribute('id', this._id);
+
+
+
     	if (this._percent >= 95) {
     		metric.className += " alert";
     		if (expandAlert) { 
@@ -108,7 +112,6 @@
     	var svg = document.createElementNS(svgns, "svg");
 		svg.setAttribute('width', "200px");
 		svg.setAttribute('height', "200px");
-		svg.setAttribute('id', this._id);
 		setPath(svg, this._percent);
 
     	metric.appendChild(svg);

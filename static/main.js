@@ -38,19 +38,6 @@ function generateOptionElement(opt, description) {
 	}
 }());
 
-/* Sorters */
-function sortPriority(a,b) {
-  if (a.percent > b.percent)
-    return -1;
-  if (a.percent < b.percent)
-    return 1;
-  return 0;
-}
-
-
-
-
-
 
 /* Ajax stuff */
 function makeRequest(url, callback) {
@@ -84,20 +71,5 @@ function makeRequest(url, callback) {
 	};
 	httpRequest.open('GET', url);
 	httpRequest.send();
-}
-
-function parseJSONCallback(content) {
-	var jsonblob = JSON.parse(content);
-	var wrapper = document.getElementById('dynamic');
-	wrapper.innerHTML = '';
-
-	if (OPTIONS['sortPriority']) {
-		jsonblob.sort(sortPriority);
-	}
-
-	for (var i = 0; i < jsonblob.length; i++) { 
-		new Pie(jsonblob[i].percent, jsonblob[i].description, i)
-			.renderTo(wrapper,  OPTIONS);
-	}
 }
 
