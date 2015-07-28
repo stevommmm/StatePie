@@ -89,20 +89,21 @@
     	metric.className = "metric";
     	metric.setAttribute('id', this._id);
     	metric.setAttribute('title', this._id);
+    	metric.style.background = 'hsla(' + (100 - this._percent) + ', 100%, 16%, 0.4)';
 
 
     	if (this._percent >= 95) {
-    		metric.className += " alert";
+    		// metric.className += " alert";
     		if (expandAlert) { 
     			metric.style.width = "410px";
     		}
     	} else if (this._percent >= 80) {
-    		metric.className += " warn";
+    		// metric.className += " warn";
     		if (expandWarn) { 
     			metric.style.width = "410px";
     		}
     	} else {
-    		metric.className += " normal";
+    		// metric.className += " normal";
     		if (expandNormal) { 
     			metric.style.width = "410px";
     		}

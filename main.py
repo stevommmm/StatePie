@@ -5,10 +5,29 @@ import traceback
 import mimetypes
 import sqlite3
 import sys
+import subprocess
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
 STATIC = os.path.join(ROOT, 'static')
 SCRIPTS = os.path.join(ROOT, 'scripts')
+
+
+# Sadly we run 2.6 in production
+if "check_output" not in dir( subprocess ): # duck punch it in!
+	def f(*popenargs, **kwargs):
+		if 'stdout' in kwargs:
+			raise ValueError('stdout argument not allowed, it will be overridden.')
+		process = subprocess.Popen(stdout=subprocess.PIPE, *popenargs, **kwargs)
+		output, unused_err = process.communicate()
+		retcode = process.poll()
+		if retcode:
+			cmd = kwargs.get("args")
+			if cmd is None:
+				cmd = popenargs[0]
+			raise subprocess.CalledProcessError(retcode, cmd)
+		return output
+	subprocess.check_output = f
+
 
 class database(object):
 	def __init__(self):
@@ -121,7 +140,6 @@ def scripthandler(scriptname, *args):
 	cmd = [os.path.join(SCRIPTS, scriptname)]
 	cmd.extend(*args)
 
-	import subprocess
 	try:
 		output = subprocess.check_output(cmd).splitlines()
 		for metric in output:

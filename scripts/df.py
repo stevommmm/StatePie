@@ -33,5 +33,5 @@ except Exception as e:
 	print json.dumps({
 		'uid': hostname + "_" + filesystem + "_perc_used",
 		'percent': -1,
-		'description': 'Disk usage for %s on %s. Exception hit :%s' % (filesystem, hostname, repr(e)),
+		'description': 'Disk usage for "%s" on "%s". Exception hit :%s' % (filesystem, hostname, repr(e)),
 	})
