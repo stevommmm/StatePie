@@ -88,7 +88,7 @@
     	metric.setAttribute('data-percent', this._percent);
     	metric.className = "metric";
     	metric.setAttribute('id', this._id);
-
+    	metric.setAttribute('title', this._id);
 
 
     	if (this._percent >= 95) {
