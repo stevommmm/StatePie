@@ -5,13 +5,14 @@ import sys
 import re
 import json
 
-hostname = sys.argv[1]
-filesystem = sys.argv[2]
+username = sys.argv[1]
+hostname = sys.argv[2]
+filesystem = sys.argv[3]
 
 try:
 	ssh = paramiko.SSHClient()
 	ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-	ssh.connect(hostname)
+	ssh.connect(hostname, username=username)
 
 	stdin, stdout, stderr = ssh.exec_command('df ' + filesystem)
 	stdout_data = stdout.read()
