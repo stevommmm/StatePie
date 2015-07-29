@@ -8,6 +8,10 @@ __pycache__/
 # sqlite database
 *.db
 
+# check scripts
+
+scripts/
+
 # Distribution / packaging
 .Python
 env/
