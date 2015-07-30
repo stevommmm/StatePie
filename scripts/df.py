@@ -23,16 +23,24 @@ try:
 	if not perc_search_match:
 		perc_search_match = -1
 	else:
-		perc_search_match = perc_search_match[0]
+		perc_search_match = int(perc_search_match[0])
+
+	level = 'alert'
+	if perc_search_match < 90 and perc_search_match >= 0:
+		level = 'warn'
+	if perc_search_match < 60 and perc_search_match >= 0:
+		level = 'normal'
 
 	print json.dumps({
 		'uid': hostname + "_" + filesystem + "_perc_used",
 		'percent': perc_search_match,
 		'description': 'Disk usage for %s on %s' % (filesystem, hostname),
+		'state': level
 	})
 except Exception as e:
 	print json.dumps({
 		'uid': hostname + "_" + filesystem + "_perc_used",
 		'percent': -1,
 		'description': 'Disk usage for "%s" on "%s". Exception hit :%s' % (filesystem, hostname, repr(e)),
+		'state': 'alert',
 	})

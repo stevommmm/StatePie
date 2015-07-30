@@ -33,7 +33,7 @@ class database(object):
 	def __init__(self):
 		with self._db() as db:
 			c = db.cursor()
-			c.execute('''CREATE TABLE IF NOT EXISTS state(uid text primary key, percent int, description text)''')
+			c.execute('''CREATE TABLE IF NOT EXISTS state(uid text primary key, percent int, description text, state int)''')
 
 	def _db(self):
 		db = sqlite3.connect(os.path.join(ROOT, 'state.db'))
@@ -43,13 +43,13 @@ class database(object):
 	def fetch(self):
 		with self._db() as db:
 			c = db.cursor()
-			results = c.execute('''SELECT * FROM state''')
+			results = c.execute('''SELECT * FROM state ORDER BY percent DESC''')
 			return map(dict, results.fetchall())
 
-	def update(self, uid, percent, description):
+	def update(self, uid, percent, description, state):
 		with self._db() as db:
 			c = db.cursor()
-			c.execute('''INSERT OR REPLACE INTO state(uid, percent, description) VALUES(?, ?, ?)''', (uid, percent, description))
+			c.execute('''INSERT OR REPLACE INTO state VALUES(?, ?, ?, ?)''', (uid, percent, description, state))
 			db.commit()
 
 

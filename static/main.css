@@ -36,14 +36,14 @@ body {
 	-webkit-transition: width .3s; /* Safari */
     transition: width .3s;
 }
-.metric.alert {
-	 background-color: rgba(82, 0, 0, 0.4);
+.metric.alert circle {
+	stroke: rgba(82, 0, 0, 0.4);
 }
-.metric.warn {
-	background-color: rgba(98, 82, 0, 0.4);
+.metric.warn circle {
+	stroke: rgba(98, 82, 0, 0.4);
 }
-.metric.normal {
-	background-color: rgba(16, 82, 0, 0.4);
+.metric.normal circle {
+	stroke: rgba(16, 82, 0, 0.4);
 }
 .metric > svg {
 	display: inline-block;

@@ -30,23 +30,24 @@
 	    return (arcData);
 	}
 
-	function setPath(svg, percent) {
+	function setPath(svg, percent, radius) {
+		radius = radius || 50
 		svg.innerHTML = '';
 		// Percent background
 		var circle = document.createElementNS(svgns, "circle");
 	    circle.setAttributeNS(null, "fill", "transparent");
 	    circle.setAttributeNS(null, "stroke", "rgba(0,0,0,0.05)");
-	    circle.setAttributeNS(null, "stroke-width", 16);
+	    circle.setAttributeNS(null, "stroke-width", 8);
 	    circle.setAttributeNS(null, "cx", parseInt(svg.getAttribute('width')) / 2);
 		circle.setAttributeNS(null, "cy", parseInt(svg.getAttribute('height')) / 2);
-	    circle.setAttributeNS(null, "r", 50);
+	    circle.setAttributeNS(null, "r", radius);
 	    svg.appendChild(circle);
 
 	    // Percent indicator
 	    var path = document.createElementNS(svgns, "path");
 	    path.setAttributeNS(null, "fill", "transparent");
 	    path.setAttributeNS(null, "stroke-width", 16);
-	    path.setAttributeNS(null, "d", generateArc(svg, 50, percent));
+	    path.setAttributeNS(null, "d", generateArc(svg, radius, percent));
 	    path.setAttributeNS(null, "stroke", "#fff");
 
 	    svg.appendChild(path);
@@ -65,10 +66,11 @@
 	}
 
 
-    Pie = function(percent, description, id) {
+    Pie = function(percent, description, state, id) {
     	this._id = id;
 		this.setPercent(percent);
 		this.setDescription(description);
+		this.setState(state);
     };
 
     Pie.prototype.setPercent = function(percent) {
@@ -79,6 +81,10 @@
     	this._description = description;
     }
 
+    Pie.prototype.setState = function(state) {
+    	this._state = state;
+    }
+
     Pie.prototype.renderTo = function(container, options) {
     	var expandAlert = options['expandAlert'] || false;  // Auto expand alert 
     	var expandWarn = options['expandWarn'] || false;  // Auto expand warning
@@ -86,27 +92,19 @@
 
     	var metric = document.createElement('div');
     	metric.setAttribute('data-percent', this._percent);
-    	metric.className = "metric";
+    	metric.className = "metric " + this._state;
     	metric.setAttribute('id', this._id);
     	metric.setAttribute('title', this._id);
+    	metric.setAttribute('data-state', this._state);
     	metric.style.background = 'hsla(' + (100 - this._percent) + ', 100%, 16%, 0.4)';
 
 
-    	if (this._percent >= 95) {
-    		// metric.className += " alert";
-    		if (expandAlert) { 
-    			metric.style.width = "410px";
-    		}
-    	} else if (this._percent >= 80) {
-    		// metric.className += " warn";
-    		if (expandWarn) { 
-    			metric.style.width = "410px";
-    		}
-    	} else {
-    		// metric.className += " normal";
-    		if (expandNormal) { 
-    			metric.style.width = "410px";
-    		}
+    	if (this._state == 'alert' && expandAlert) {
+    		metric.style.width = "410px";
+    	} else if (this._state == 'warn' && expandWarn) {
+    		metric.style.width = "410px";
+    	} else if (this._state == 'normal' && expandNormal) { 
+    		metric.style.width = "410px";
     	}
 
 

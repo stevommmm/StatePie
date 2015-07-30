@@ -25,19 +25,13 @@
 
 			wrapper.innerHTML = '';
 
-			if (OPTIONS['sortPriority']) {
-				// rows.sort(sortPriority);
-				rows.sort(function(a, b) {return b['percent'] - a['percent']; });
-			}
-
 			for (row of rows) {
-				new Pie(row['percent'], row['description'], row['uid']).renderTo(wrapper,  OPTIONS);
+				new Pie(row['percent'], row['description'], row['state'], row['uid']).renderTo(wrapper,  OPTIONS);
 			}
 		}
 
 		window.onload = function() {
 			var oele = document.getElementById('options');
-			oele.appendChild(generateOptionElement('sortPriority', 'Sort by Percent'));
 			oele.appendChild(generateOptionElement('expandAlert', 'Expand Alerts'));
 			oele.appendChild(generateOptionElement('expandWarn', 'Expand Warnings'));
 			oele.appendChild(generateOptionElement('expandNormal', 'Expand Normal'));
